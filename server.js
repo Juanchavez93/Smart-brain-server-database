@@ -36,6 +36,6 @@ app.put('/image', (req, res) => { image.handleImage(req, res, postgres)})
 app.post('/imageurl', (req, res) => { image.handleApiCall(req, res)})
 
 const DATABASE_URL = process.env.DATABASE_URL
-app.listen(3000, () => {
+app.listen(5432, () => {
   console.log(`server is listening to port ${DATABASE_URL}`)
 });
