@@ -10,32 +10,27 @@ const profile = require('./controllers/profile');
 const image = require('./controllers/image');
 
 const postgres = knex({
-
   client: 'pg',
   connection: {
-    connectionString : process.env.DATABASE_URL,
-    host : process.env.DATABASE_HOST,
-    port: 5432,
-    user : process.env.DATABASE_USER,
-    password : process.env.DATABASE_PW,
-    database : process.env.DATABASE_DB
+    host : '127.0.0.1',
+    user : 'aneagoie',
+    password : '',
+    database : 'smart-brain'
   }
 });
 
 const app = express();
 
-
 app.use(cors())
 app.use(express.json());
 
-app.get('/', (req, res)=> { res.send(postgres.users) })
-app.post('/signin', signin.handleSignin(postgres, bcrypt))
-app.post('/register', (req, res) => { register.handleRegister(req, res, postgres, bcrypt) })
-app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, postgres)})
-app.put('/image', (req, res) => { image.handleImage(req, res, postgres)})
+app.get('/', (req, res)=> { res.send(db.users) })
+app.post('/signin', signin.handleSignin(db, bcrypt))
+app.post('/register', (req, res) => { register.handleRegister(req, res, db, bcrypt) })
+app.get('/profile/:id', (req, res) => { profile.handleProfileGet(req, res, db)})
+app.put('/image', (req, res) => { image.handleImage(req, res, db)})
 app.post('/imageurl', (req, res) => { image.handleApiCall(req, res)})
 
-const DATABASE_URL = process.env.DATABASE_URL
-app.listen(5432, () => {
-  console.log(`server is listening to port ${DATABASE_URL}`)
-});
+app.listen(3000, ()=> {
+  console.log('app is running on port 3000');
+})
